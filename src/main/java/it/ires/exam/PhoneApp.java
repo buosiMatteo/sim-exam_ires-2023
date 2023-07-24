@@ -7,5 +7,6 @@ public class PhoneApp {
 
     public static void main(String[] args) {
         NetworkDistribution networkDistribution = new NetworkDistribution();
-    
+
     }
+}

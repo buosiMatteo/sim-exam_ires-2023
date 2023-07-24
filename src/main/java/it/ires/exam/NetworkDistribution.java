@@ -1,8 +1,6 @@
 package it.ires.exam;
 
-import it.ires.exam.exception.NumberNotValidException;
-import it.ires.exam.exception.RecievereAlreadyinACallException;
-import it.ires.exam.exception.UserAreadyCallingException;
+import it.ires.exam.exception.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +40,35 @@ public class NetworkDistribution {
             simCardList.add(s1);
             simCardList.add(s2);
             simCardList.add(s3);
-        } catch (NumberNotValidException e){
+        } catch (NumberNotValidException e) {
             System.out.println(e.getMessage());
         }
+    }
 
+    public SimCard createNewSimCard(String number, double credit, PhonePlan phonePlan) throws CantCreateSimException {
+        try {
+            return new SimCard(number, credit, phonePlan);
+        } catch (NumberNotValidException e) {
+            System.out.println(e.getMessage());
+        }
+        throw new CantCreateSimException();
+    }
 
+    public Smartphone createNewSmartphone(String number, double credit, String nameOfOwner, int minuteOfCall, PhonePlan phonePlan) throws CantCreateSmartphoneException {
+        try {
+            return new Smartphone(number, credit, nameOfOwner, minuteOfCall, phonePlan);
+        } catch (NumberNotValidException e) {
+            System.out.println(e.getMessage());
+        }
+        throw new CantCreateSmartphoneException();
+    }
+
+    public void makeCall(Smartphone smartphone, String numberToCall) {
+        try {
+            smartphone.startCall(numberToCall);
+        } catch (UserAreadyCallingException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
+
