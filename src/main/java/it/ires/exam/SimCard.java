@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimCard {
-    private final double COST_PER_MINUTE = 0.50;
+    private PhonePlan phonePlan;
     private final String number;
     private double credit;
     private List<Integer> callInMinutes;
 
-    public SimCard(String number1, double credit) throws NumberNotValidException {
+    public SimCard(String number1, double credit, PhonePlan phonePlan) throws NumberNotValidException {
         this.number = validateNumber(number1);
         this.credit = credit;
+        this.phonePlan = phonePlan;
         callInMinutes = new ArrayList<>();
     }
 
@@ -47,4 +48,7 @@ public class SimCard {
         return sb.toString();
     }
 
+    public void setPhonePlan(PhonePlan phonePlan) {
+        this.phonePlan = phonePlan;
+    }
 }

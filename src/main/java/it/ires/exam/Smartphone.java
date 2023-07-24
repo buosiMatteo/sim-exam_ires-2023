@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class Smartphone extends SimCard {
     private String owner;
+
     private boolean isCalling = false;
 
     private LocalTime startCall;
@@ -20,8 +21,8 @@ public class Smartphone extends SimCard {
 
     private String lastNumberCalled;
 
-    public Smartphone(String number, double credit, String nameOfOwner, int minuteOfCall) throws NumberNotValidException {
-        super(number, credit);
+    public Smartphone(String number, double credit, String nameOfOwner, int minuteOfCall, PhonePlan phonePlan) throws NumberNotValidException {
+        super(number, credit, phonePlan);
         this.owner = nameOfOwner;
         this.minuteOfCall = minuteOfCall;
         callRegister = new HashMap<>();
@@ -29,6 +30,14 @@ public class Smartphone extends SimCard {
 
     public String getOwner() {
         return owner;
+    }
+
+    public boolean isCalling() {
+        return isCalling;
+    }
+
+    public void setCalling(boolean calling) {
+        isCalling = calling;
     }
 
     public int getMinuteOfCall() {
@@ -55,14 +64,15 @@ public class Smartphone extends SimCard {
         }
     }
 
-    public void endCall() {
+    public boolean endCall() {
         isCalling = false;
         int callLength = LocalTime.now().getMinute() - (startCall.getMinute());
         minuteOfCall += callLength;
-        Integer numberofCall = callRegister.get(lastNumberCalled);
+        callRegister.put(lastNumberCalled, 0);
+        int numberofCall = callRegister.get(lastNumberCalled);
         numberofCall++;
         callRegister.put(lastNumberCalled, numberofCall);
-
+        return true;
     }
 
     public Integer numberOfCallToANumber(String numberToSearch) throws NeverCallThisNumberException {
